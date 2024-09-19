@@ -1,0 +1,41 @@
+name: autism_project
+description: "A new Flutter project."
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.4.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  fl_chart: ^0.50.0
+  charts_flutter: ^0.12.0
+  google_fonts: ^3.0.1
+  cupertino_icons: ^1.0.6
+  flutter_tts: ^3.3.0
+  audioplayers: ^0.20.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+
+
+  assets:
+
+    - Images/f1.jpg
+    - Images/n1.jpg
+    - Images/n2.png
+    - Images/f3.jpg
+    - Images/n4.jpg
+    - Images/n6.jpg
+    - Images/n5.jpg
+
+
+
+
