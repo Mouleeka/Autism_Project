@@ -1,302 +1,119 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-class CommunicationPage extends StatelessWidget {
+class CommunicationPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Communication Tools'),
-        backgroundColor: Colors.green[700],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              'Choose a Communication Tool',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            SizedBox(height: 20),
-            _buildToolButton(
-              context: context,
-              icon: Icons.speaker,
-              label: 'Text-to-Speech',
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => TextToSpeechPage()),
-                );
-              },
-            ),
-            _buildToolButton(
-              context: context,
-              icon: Icons.image,
-              label: 'Pictograms',
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => PictogramsPage()),
-                );
-              },
-            ),
-            _buildToolButton(
-              context: context,
-              icon: Icons.chat,
-              label: 'Common Phrases',
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CommonPhrasesPage()),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildToolButton({
-    required BuildContext context,
-    required IconData icon,
-    required String label,
-    required VoidCallback onPressed,
-  }) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: ElevatedButton.icon(
-        onPressed: onPressed,
-        icon: Icon(icon, size: 40),
-        label: Text(
-          label,
-          style: TextStyle(fontSize: 20),
-        ),
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.greenAccent[400],
-          minimumSize: Size(double.infinity, 60),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ),
-      ),
-    );
-  }
+  _CommunicationPageState createState() => _CommunicationPageState();
 }
 
-// Page for Text-to-Speech
-class TextToSpeechPage extends StatefulWidget {
-  @override
-  _TextToSpeechPageState createState() => _TextToSpeechPageState();
-}
-
-class _TextToSpeechPageState extends State<TextToSpeechPage> {
+class _CommunicationPageState extends State<CommunicationPage> {
   FlutterTts flutterTts = FlutterTts();
-  TextEditingController _controller = TextEditingController();
+  TextEditingController _textToSpeechController = TextEditingController();
+  TextEditingController _customPhraseController = TextEditingController();
 
+  double _speechRate = 1.0;
+  double _pitch = 1.0;
+
+  // List of default phrases with emojis and colors
+  List<Map<String, dynamic>> phrases = [
+    {'text': 'Let’s play!', 'emoji': '🎮', 'color': Colors.orangeAccent},
+    {'text': 'Good job!', 'emoji': '🌟', 'color': Colors.greenAccent},
+    {'text': 'Can you help me?', 'emoji': '🆘', 'color': Colors.blueAccent},
+    {'text': 'I need a break', 'emoji': '🛌', 'color': Colors.purpleAccent},
+    {'text': 'I’m happy', 'emoji': '😊', 'color': Colors.yellowAccent},
+    {'text': 'I’m sad', 'emoji': '😢', 'color': Colors.lightBlueAccent},
+    {'text': 'Let’s explore!', 'emoji': '🌍', 'color': Colors.pinkAccent},
+  ];
+
+  // Function to speak the given text with current pitch and rate
   _speak(String text) async {
+    await flutterTts.setSpeechRate(_speechRate);
+    await flutterTts.setPitch(_pitch);
     await flutterTts.speak(text);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Text-to-Speech'),
-        backgroundColor: Colors.green[700],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            TextField(
-              controller: _controller,
-              decoration: InputDecoration(
-                labelText: 'Enter text to speak',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () => _speak(_controller.text),
-              child: Text('Speak'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.greenAccent[400],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+  // Function to add a custom phrase
+  void _addCustomPhrase() {
+    if (_customPhraseController.text.isNotEmpty) {
+      setState(() {
+        phrases.add({
+          'text': _customPhraseController.text,
+          'emoji': '✨', // Default emoji for custom phrases
+          'color': Colors.tealAccent,
+        });
+      });
+      _customPhraseController.clear(); // Clear the input field
+      Navigator.of(context).pop(); // Close the dialog
+    }
   }
-}
 
-// Page for Pictograms
-class PictogramsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pictograms'),
-        backgroundColor: Colors.green[700],
+        title: Text(
+          'VR Learning for Kids',
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: Colors.deepPurple,
       ),
       body: Container(
+        width: double.infinity,  // Ensure gradient covers the full width
+        height: double.infinity, // Ensure gradient covers the full height
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.purpleAccent, Colors.tealAccent],
+            colors: [Color(0xFFFFD1DC), // Gold
+              Color(0xFFFFEFD5),
+
+            ],
+
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
         ),
-        child: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 16.0,
-            mainAxisSpacing: 16.0,
-          ),
-          padding: const EdgeInsets.all(16.0),
-          itemCount: 6,
-          itemBuilder: (context, index) {
-            return _buildPictogramCard(
-              context,
-              'assets/Images/h${index + 1}.png', // Ensure this path matches your assets
-              'Pictogram ${index + 1}',
-            );
-          },
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPictogramCard(BuildContext context, String imagePath, String label) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => PictogramDetailPage(
-              imagePath: imagePath,
-              label: label,
-            ),
-          ),
-        );
-      },
-      child: Card(
-        margin: const EdgeInsets.all(8.0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
-        elevation: 5,
-        child: Stack(
-          children: [
-            Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.orangeAccent, Colors.deepOrangeAccent],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                  ),
-                ),
-              ),
-            ),
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    imagePath,
-                    width: 80,
-                    height: 80,
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    label,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// Page for Pictogram Detail
-class PictogramDetailPage extends StatelessWidget {
-  final String imagePath;
-  final String label;
-
-  PictogramDetailPage({required this.imagePath, required this.label});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(label),
-        backgroundColor: Colors.green[700],
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blueAccent, Colors.pinkAccent],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Center(
+        child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.asset(
-                  imagePath,
-                  width: 150,
-                  height: 150,
-                ),
-                SizedBox(height: 20),
                 Text(
-                  label,
+                  'Let’s Learn and Communicate!',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.purple,
                   ),
                 ),
                 SizedBox(height: 20),
                 Text(
-                  'Here you can add detailed information about the pictogram. This might include instructions, context of use, or any other relevant details to help the user understand the pictogram better.',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white70,
-                    // textAlign: TextAlign.center,
-                  ),
+                  'Choose an activity below:',
+                  style: TextStyle(fontSize: 22, color: Colors.black87),
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    // Add any action here if needed
-                  },
-                  child: Text('Learn More'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orangeAccent,
-                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                _buildToolButton(
+                  context: context,
+                  icon: Icons.record_voice_over,
+                  label: 'Text-to-Speech',
+                  color: Colors.blueAccent,
+                  onPressed: () => _showTextToSpeechDialog(context),
+                ),
+                _buildToolButton(
+                  context: context,
+                  icon: Icons.chat_bubble,
+                  label: 'Common Phrases',
+                  color: Colors.pinkAccent,
+                  onPressed: () => _showCommonPhrasesDialog(context),
+                ),
+                _buildToolButton(
+                  context: context,
+                  icon: Icons.add_circle_outline,
+                  label: 'Add Custom Phrase',
+                  color: Colors.tealAccent,
+                  onPressed: () => _showAddPhraseDialog(context),
                 ),
               ],
             ),
@@ -305,49 +122,193 @@ class PictogramDetailPage extends StatelessWidget {
       ),
     );
   }
-}
 
-// Page for Common Phrases
-class CommonPhrasesPage extends StatelessWidget {
-  FlutterTts flutterTts = FlutterTts();
-
-  _speakPhrase(String phrase) async {
-    await flutterTts.speak(phrase);
+  // Method for creating colorful buttons
+  Widget _buildToolButton({
+    required BuildContext context,
+    required IconData icon,
+    required String label,
+    required Color color,
+    required VoidCallback onPressed,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12.0),
+      child: ElevatedButton.icon(
+        onPressed: onPressed,
+        icon: Icon(icon, size: 40, color: Colors.white),
+        label: Text(
+          label,
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        ),
+        style: ElevatedButton.styleFrom(
+          minimumSize: Size(double.infinity, 80),
+          backgroundColor: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          shadowColor: Colors.black,
+          elevation: 10,
+        ),
+      ),
+    );
   }
 
-  final List<String> phrases = [
-    'Hello!',
-    'Good Morning!',
-    'Thank you!',
-    'Yes',
-    'No',
-    'Please help me'
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Common Phrases'),
-        backgroundColor: Colors.green[700],
-      ),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemCount: phrases.length,
-        itemBuilder: (context, index) {
-          return Card(
-            color: Colors.greenAccent[100],
-            child: ListTile(
-              title: Text(
-                phrases[index],
-                style: TextStyle(fontSize: 20),
+  // Dialog for Text-to-Speech with speech rate and pitch sliders
+  void _showTextToSpeechDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Text-to-Speech',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _textToSpeechController,
+                decoration: InputDecoration(
+                  labelText: 'Enter text to speak',
+                  border: OutlineInputBorder(),
+                ),
               ),
-              trailing: Icon(Icons.play_arrow),
-              onTap: () => _speakPhrase(phrases[index]),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Speed'),
+                  Slider(
+                    value: _speechRate,
+                    min: 0.5,
+                    max: 2.0,
+                    divisions: 6,
+                    label: _speechRate.toStringAsFixed(1),
+                    onChanged: (value) {
+                      setState(() {
+                        _speechRate = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Pitch'),
+                  Slider(
+                    value: _pitch,
+                    min: 0.5,
+                    max: 2.0,
+                    divisions: 6,
+                    label: _pitch.toStringAsFixed(1),
+                    onChanged: (value) {
+                      setState(() {
+                        _pitch = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              ElevatedButton(
+                onPressed: () => _speak(_textToSpeechController.text),
+                child: Text('Speak'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blueAccent,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  // Dialog for Common Phrases with animations and proper display
+  void _showCommonPhrasesDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Common Phrases',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          content: phrases.isNotEmpty
+              ? Container(
+            height: 300,
+            width: double.maxFinite,
+            child: ListView.builder(
+              itemCount: phrases.length,
+              itemBuilder: (context, index) {
+                return AnimatedContainer(
+                  duration: Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                  child: Card(
+                    color: phrases[index]['color'],
+                    elevation: 8,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: ListTile(
+                      leading: Text(
+                        phrases[index]['emoji'],
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      title: Text(
+                        phrases[index]['text'],
+                        style: TextStyle(fontSize: 18, color: Colors.white),
+                      ),
+                      onTap: () {
+                        _speak(phrases[index]['text']);
+                      },
+                    ),
+                  ),
+                );
+              },
             ),
-          );
-        },
-      ),
+          )
+              : Text(
+            'No common phrases available.',
+            style: TextStyle(fontSize: 16, color: Colors.black87),
+          ),
+        );
+      },
+    );
+  }
+
+  // Dialog to add a custom phrase
+  void _showAddPhraseDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Add Custom Phrase',
+            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _customPhraseController,
+                decoration: InputDecoration(
+                  labelText: 'Enter your phrase',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _addCustomPhrase,
+                child: Text('Add Phrase'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.tealAccent,
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

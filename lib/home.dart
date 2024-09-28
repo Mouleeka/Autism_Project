@@ -468,7 +468,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                       children: [
                         _buildCircularCard(
                           title: 'Daily Routine',
-                          imagePath: 'Images/n1.jpg',
+                          imagePath: 'Images/s1.jpeg',
                           soundFile: 'daily_routine.mp3',
                           onTap: () {
                             _playSound('tap.wav');
@@ -480,7 +480,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         ),
                         _buildCircularCard(
                           title: 'Communication Tools',
-                          imagePath: 'Images/f1.jpg',
+                          imagePath: 'Images/s2.jpeg',
                           soundFile: 'communication.mp3',
                           onTap: () {
                             _playSound('tap.wav');
@@ -492,7 +492,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         ),
                         _buildCircularCard(
                           title: 'Learning Modules',
-                          imagePath: 'Images/f3.jpg',
+                          imagePath: 'Images/s3.jpeg',
                           soundFile: 'learning.mp3',
                           onTap: () {
                             _playSound('tap.wav');
@@ -504,7 +504,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         ),
                         _buildCircularCard(
                           title: 'Behavior Tracking',
-                          imagePath: 'Images/n4.jpg',
+                          imagePath: 'Images/s4.png',
                           soundFile: 'behavior.mp3',
                           onTap: () {
                             _playSound('tap.wav');
@@ -516,7 +516,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         ),
                         _buildCircularCard(
                           title: 'Games & Activities',
-                          imagePath: 'Images/n5.jpg',
+                          imagePath: 'Images/s5.jpeg',
                           soundFile: 'games.mp3',
                           onTap: () {
                             _playSound('tap.wav');
@@ -528,7 +528,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
                         ),
                         _buildCircularCard(
                           title: 'Rewards System',
-                          imagePath: 'Images/n6.jpg',
+                          imagePath: 'Images/s6.jpg',
                           soundFile: 'rewards.mp3',
                           onTap: () {
                             _playSound('tap.wav');

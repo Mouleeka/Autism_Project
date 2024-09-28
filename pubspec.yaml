@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  fl_chart: ^0.50.0
+  fl_chart: ^0.69.0
   charts_flutter: ^0.12.0
   google_fonts: ^3.0.1
   cupertino_icons: ^1.0.6
@@ -28,13 +28,12 @@ flutter:
 
   assets:
 
-    - Images/f1.jpg
-    - Images/n1.jpg
-    - Images/n2.png
-    - Images/f3.jpg
-    - Images/n4.jpg
-    - Images/n6.jpg
-    - Images/n5.jpg
+    - Images/s1.jpeg
+    - Images/s2.jpeg
+    - Images/s3.jpeg
+    - Images/s4.png
+    - Images/s5.jpeg
+    - Images/s6.jpg
 
 
 

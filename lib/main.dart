@@ -1,6 +1,7 @@
 import 'package:autism_project/signup.dart';
 import 'package:flutter/material.dart';
 import 'dayspage.dart';
+import 'game 4.dart';
 import 'games.dart';
 import 'home.dart';
 import 'levels.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => HomePage(),
         '/levels': (context) => LevelsPage(),
         '/games': (context) => GamesPage(),
+        // '/game 4': (context) => Game4Page(onBack: () {  },),
 
         // Level and day routes
         '/level1': (context) => DayPage(level: 1, day: 1),
