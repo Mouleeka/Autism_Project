@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # autism_project
 
 A new Flutter project.
@@ -14,3 +15,6 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+=======
+# Autism_Project
+>>>>>>> 28eb37671a86219ba10fab0648be33c3dac37220
